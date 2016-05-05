@@ -13,7 +13,9 @@ module Inspector
     end
 
     # Searches for a query, with a UI delegate
-    def search(query)
+    def search(query, delegate)
+      validate_delegate(delegate)
+
       url = url_for_request query
       results = get_api_results url
       parse_results query, results
@@ -25,7 +27,8 @@ module Inspector
 
     # Generates a URL for the request
     def url_for_request(query)
-      "https://api.github.com/search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
+      root = "https://api.github.com/"
+      root + "search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
     end
 
     # Gets the search results
@@ -39,17 +42,16 @@ module Inspector
       report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
       report.query = query
       report.total_results = results['total_count']
-      report.issues = results['items'].map do |item|
-        issue = Issue.new
-        issue.title = item['title']
-        issue.number = item['number']
-        issue.url = item['url']
-        issue.state = item['state']
-        issue.body = item['body']
-        issue.comments = item['comments']
-        issue
-      end
+      report.issues = results['items'].map { |item| Issue.new(item) }
       report
+    end
+
+    def validate_delegate(delegate)
+      e = Evidence.new
+      protocol = e.public_methods false
+      protocol.each do |m|
+        raise "#{delegate} does not handle #{m}" unless delegate.methods.include? m
+      end
     end
   end
 
@@ -57,10 +59,14 @@ module Inspector
     attr_accessor :issues, :url, :query, :total_results
   end
 
-  # TODO, as these are key compliant with the json dicts, maybe they could just have an init func that
-  # loops through their attrs and pulls the values out of the hash?
-
   class Issue
-    attr_accessor :title, :number, :url, :state, :body, :comments
+    attr_accessor :title, :number, :html_url, :state, :body, :comments
+
+    # Hash -> public attributes
+    def initialize(*h)
+      if h.length == 1 && h.first.is_a?(Hash)
+        h.first.each { |k, v| send("#{k}=", v) if public_methods.include?("#{k}=".to_sym) }
+      end
+    end
   end
 end

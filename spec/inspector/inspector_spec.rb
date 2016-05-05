@@ -27,7 +27,7 @@ describe Inspector::Inspector do
   end
 
   it 'passes the message of a issue to a query' do
-    expect(@subject).to receive(:search_query).with('Raising Issue')
+    expect(@subject).to receive(:search_query).with('Raising Issue', nil)
 
     begin
       raise 'Raising Issue'
@@ -36,8 +36,23 @@ describe Inspector::Inspector do
     end
   end
 
+  it 'passes the delegate of an exception to a query' do
+    stub = Object.new
+    expect(@subject).to receive(:search_query).with('Raising Issue', stub)
+
+    begin
+      raise 'Raising Issue'
+    rescue StandardError => e
+      @subject.search_exception(e, stub)
+    end
+  end
+
   it 'requests a search from the sidekick' do
-    expect(@subject.sidekick).to receive(:search).with('Raising Issue')
+    expect(@subject.sidekick).to receive(:search)
     @subject.search_query('Raising Issue')
+  end
+
+  describe 'delegate callbacks' do
+
   end
 end

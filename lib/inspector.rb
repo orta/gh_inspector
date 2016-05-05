@@ -1,5 +1,4 @@
 require 'inspector/version'
-
 # Note that the README is generated from the class comments
 
 module Inspector
@@ -18,11 +17,23 @@ module Inspector
   # inspector.search_query "Someone set us up the bomb"
   # ```
   #
-  # By default this would output something like:
+  # By default this would output:
   #
+  # ```
+  # Looking for related issues on CocoaPods/CocoaPods...
   #
+  #   - undefined method `to_ary' for #<Pod::Specification name="iVersion">Did you mean? to_query
+  #     https://github.com/CocoaPods/CocoaPods/issues/4748 [closed] [1 comment]
   #
+  #   - NoMethodError - undefined method `to_ary' for Pod EAIntroView
+  #     https://github.com/CocoaPods/CocoaPods/issues/4391 [closed] [15 comments]
   #
+  #   - Do a search on GitHub for issues relating to a crash?
+  #     https://github.com/CocoaPods/CocoaPods/issues/4391 [open] [3 comments]
+  #
+  # and 10 more at:
+  # https://github.com/CocoaPods/CocoaPods/search?q=undefined+method+%60to_ary%27&type=Issues&utf8=✓
+  # ```
   #
 
   class Inspector
@@ -43,13 +54,14 @@ module Inspector
 
     # Does some magic to try and pull out a reasonable search query
     # for an exception, then searchs with that
-    def search_exception(exception, _delegate = nil)
-      search_query(exception.message)
+    def search_exception(exception, delegate = nil)
+      search_query(exception.message, delegate)
     end
 
     # Queries for an specific search string
     def search_query(query, _delegate = nil)
-      sidekick.search(query)
+      delegate ||= Evidence.new
+      sidekick.search(query, delegate)
     end
   end
 end
