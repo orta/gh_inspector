@@ -1,10 +1,29 @@
 require 'inspector/version'
 
+# Note that the README is generated from the class comments
+
 module Inspector
 
-  # The main API for making inspections to GitHub.
-  # Create an instance of it, you can then ask it to search based on your
-  # raised exception, or optionally make a direct query yourself.
+  # To get started using The Issues Inspector, you will need to
+  # create an inspector. This class is main public API for querying issues.
+  #
+  # #### Getting started
+  #
+  # Create an instance of `Inspector::Inspector`, you can then ask it to search
+  # based on your raised exception, or as a direct query yourself.
+  #
+  # ``` ruby
+  # require 'gh-issues-inspector'
+  # inspector = Inspector::Inspector("orta", "eigen")
+  # inspector.search_query "Someone set us up the bomb"
+  # ```
+  #
+  # By default this would output something like:
+  #
+  #
+  #
+  #
+  #
 
   class Inspector
     attr_accessor :repo_owner, :repo_name, :query, :sidekick

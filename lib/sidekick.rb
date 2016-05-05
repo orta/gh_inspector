@@ -5,10 +5,10 @@ module Inspector
   # then pass them back to the inspector who gets the public API credit.
 
   class Sidekick
-    attr_accessor :owner, :repo_name
+    attr_accessor :repo_owner, :repo_name
 
-    def initialize(owner, repo_name)
-      self.owner = owner
+    def initialize(repo_owner, repo_name)
+      self.repo_owner = repo_owner
       self.repo_name = repo_name
     end
 
@@ -25,7 +25,7 @@ module Inspector
 
     # Generates a URL for the request
     def url_for_request(query)
-      "https://api.github.com/search/issues?q=#{query}%2Brepo%3A#{owner}%2F#{repo_name}&sort=created&order=asc"
+      "https://api.github.com/search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
     end
 
     # Gets the search results
@@ -36,7 +36,7 @@ module Inspector
     # Converts a GitHub search JSON into a InspectionReport
     def parse_results(query, results)
       report = InspectionReport.new
-      report.url = "https://github.com/#{owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
+      report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
       report.query = query
       report.total_results = results['total_count']
       report.issues = results['items'].map do |item|
@@ -46,6 +46,7 @@ module Inspector
         issue.url = item['url']
         issue.state = item['state']
         issue.body = item['body']
+        issue.comments = item['comments']
         issue
       end
       report
@@ -60,6 +61,6 @@ module Inspector
   # loops through their attrs and pulls the values out of the hash?
 
   class Issue
-    attr_accessor :title, :number, :url, :state, :body
+    attr_accessor :title, :number, :url, :state, :body, :comments
   end
 end

@@ -7,7 +7,7 @@ describe Inspector::Sidekick do
   end
 
   it 'keeps track of user / repo' do
-    expect(@subject.owner).to eq 'orta'
+    expect(@subject.repo_owner).to eq 'orta'
     expect(@subject.repo_name).to eq 'my_repo'
   end
 
@@ -35,6 +35,7 @@ describe Inspector::Sidekick do
       expect(issue.url).to eq 'https://api.github.com/repos/CocoaPods/CocoaPods/issues/646'
       expect(issue.state).to eq 'closed'
       expect(issue.body).to include 'The Ruby 1.8.x builds work fine'
+      expect(issue.comments).to eq 8
     end
   end
 end
