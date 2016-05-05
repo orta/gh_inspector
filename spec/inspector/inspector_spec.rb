@@ -53,6 +53,5 @@ describe Inspector::Inspector do
   end
 
   describe 'delegate callbacks' do
-
   end
 end

@@ -1,7 +1,6 @@
 require 'inspector/version'
 
 module Inspector
-
   # The default user interface for the inspector, its public API should be
   # considered the protocol for other classes wanting to provide a user interface.
   #
@@ -20,20 +19,19 @@ module Inspector
   #
 
   class Evidence
-
     # Called just as the investigation has begun.
-    def inspector_started_query(query, inspector)
+    def inspector_started_query(_query, inspector)
       puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
     end
 
     # Called if it is taking longer than a second to pull down the results.
     # This offers a chance to offer feedback to the user that it's not frozen.
-    def inspector_is_still_investigating(query, inspector)
+    def inspector_is_still_investigating(_query, _inspector)
       print "."
     end
 
     # Called once the inspector has recieved a report with more than one issue.
-    def inspector_successfully_recieved_report(report, inspector)
+    def inspector_successfully_recieved_report(report, _inspector)
       report.issues[0..2].each { |issue| print_issue_full(issue) }
 
       if report.issues.count > 3
@@ -43,7 +41,7 @@ module Inspector
     end
 
     # Called once the report has been recieved, but when there are no issues found.
-    def inspector_recieved_empty_report(report, inspector)
+    def inspector_recieved_empty_report(_report, inspector)
       puts "Found no similar issues. To create a new issue, please visit:"
       puts "https://github.com/#{inspector.repo_owner}/#{inspector.repo_name}/issues/new"
     end
@@ -57,9 +55,9 @@ module Inspector
 
     private
 
-    def print_issue_full issue
+    def print_issue_full(issue)
       puts " - #{issue.title}"
-      puts "   #{issue.html_url} [#{issue.state}] [#{issue.comments} comment#{issue.comments == 1 ? "" : "s"}]"
+      puts "   #{issue.html_url} [#{issue.state}] [#{issue.comments} comment#{issue.comments == 1 ? '' : 's'}]"
       puts ""
     end
   end

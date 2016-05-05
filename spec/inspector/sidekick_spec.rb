@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'sidekick'
 require 'evidence'
 
-
 describe Inspector::Sidekick do
   before do
     @subject = Inspector::Sidekick.new 'orta', 'my_repo'

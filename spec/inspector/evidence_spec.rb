@@ -2,7 +2,6 @@ require 'spec_helper'
 require 'sidekick'
 require 'evidence'
 
-
 describe Inspector::Evidence do
   before do
     @subject = Inspector::Sidekick.new 'orta', 'my_repo'
@@ -47,15 +46,15 @@ describe Inspector::Evidence do
 and 30 more at:
 https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
 eos
-   end
+    end
 
-   describe '' do
-     before do
-       @message = ""
-       allow(@evidence).to receive(:puts).and_wrap_original do |original_method, *args, &block|
-         @message << args.first + "\n"
-       end
-     end
+    describe '' do
+      before do
+        @message = ""
+        allow(@evidence).to receive(:puts).and_wrap_original do |original_method, *args, &block|
+          @message << args.first + "\n"
+        end
+      end
 
       it 'handles full results' do
         @evidence.inspector_successfully_recieved_report(@report, @subject)
@@ -73,7 +72,7 @@ eos
 and 30 more at:
 https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
   eos
-     end
+      end
 
       it 'handles less results differenlt' do
         @report.issues = [@report.issues.first]
@@ -84,28 +83,27 @@ https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
 
 eos
-     end
+      end
 
-     it 'handles empty results' do
-       @evidence.inspector_recieved_empty_report(@report, @subject)
-       expect(@message).to eq <<-eos
+      it 'handles empty results' do
+        @evidence.inspector_recieved_empty_report(@report, @subject)
+        expect(@message).to eq <<-eos
 Found no similar issues. To create a new issue, please visit:
 https://github.com/orta/my_repo/issues/new
   eos
-     end
+      end
 
-     it 'handles network errors' do
-       error = Object.new
-       allow(error).to receive(:name).and_return("Network Error")
+      it 'handles network errors' do
+        error = Object.new
+        allow(error).to receive(:name).and_return("Network Error")
 
-       @evidence.inspector_could_not_create_report(error, "query", @subject)
-       expect(@message).to eq <<-eos
+        @evidence.inspector_could_not_create_report(error, "query", @subject)
+        expect(@message).to eq <<-eos
 Could not access the GitHub API, you may have better luck via the website.
 https://github.com/orta/my_repo/search?q=query&type=Issues&utf8=✓
 Error: Network Error
   eos
-     end
-
-   end
+      end
+    end
   end
 end

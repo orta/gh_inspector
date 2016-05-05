@@ -2,7 +2,6 @@ require 'inspector/version'
 # Note that the README is generated from the class comments
 
 module Inspector
-
   # To get started using The Issues Inspector, you will need to
   # create an inspector. This class is main public API for querying issues.
   #
@@ -32,7 +31,7 @@ module Inspector
   #     https://github.com/CocoaPods/CocoaPods/issues/4391 [open] [3 comments]
   #
   # and 10 more at:
-  # https://github.com/CocoaPods/CocoaPods/search?q=undefined+method+%60to_ary%27&type=Issues&utf8=✓
+  # https://github.com/CocoaPods/CocoaPods/search?q=undefined+method+%60to_ary%27&type=Issues
   # ```
   #
 

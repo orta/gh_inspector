@@ -1,6 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
-# require 'rubocop/rake_task'
+require 'rubocop/rake_task'
 
 RSpec::Core::RakeTask.new(:specs)
 
@@ -8,16 +8,16 @@ task default: :spec
 
 task :spec do
   Rake::Task['specs'].invoke
-  # Rake::Task['rubocop'].invoke
+  Rake::Task['rubocop'].invoke
 end
 
-# desc 'Run RuboCop on the lib/specs directory'
-# RuboCop::RakeTask.new(:rubocop) do |task|
-#   task.patterns = ['lib/**/*.rb', 'spec/**/*.rb']
-# end
+desc 'Run RuboCop on the lib/specs directory'
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.patterns = ['lib/**/*.rb', 'spec/**/*.rb']
+end
 
 task :readme do
-  readme = File.open("README.md", 'rb') { |f| f.read }
+  readme = File.open("README.md", 'rb', &:read)
 
   start_split = "## Usage"
   end_split = "## Development"
@@ -43,10 +43,9 @@ task :readme do
   evidence.children.each do |method|
     next unless method.name.to_s.start_with? "inspector"
     params = method.parameters.flatten.compact
-    usage << " - `#{method.name}(#{params.join ", "})` - #{method.docstring}\n"
+    usage << " - `#{method.name}(#{params.join ', '})` - #{method.docstring}\n"
   end
   usage << "\n\n"
-
 
   new_file = start + start_split + usage + end_split + finale
   File.open("README.md", 'w') { |f| f.write new_file }

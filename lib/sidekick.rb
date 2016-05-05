@@ -1,5 +1,4 @@
 module Inspector
-
   # The Sidekick is the one who does all the real work.
   # They take the query, get the GitHub API results, etc
   # then pass them back to the inspector who gets the public API credit.
@@ -64,7 +63,7 @@ module Inspector
 
     # Hash -> public attributes
     def initialize(*h)
-      if h.length == 1 && h.first.is_a?(Hash)
+      if h.length == 1 && h.first.kind_of?(Hash)
         h.first.each { |k, v| send("#{k}=", v) if public_methods.include?("#{k}=".to_sym) }
       end
     end
