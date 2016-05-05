@@ -22,7 +22,7 @@ describe Inspector::Inspector do
     expect(@subject.repo_name).to eq 'my_repo'
   end
 
-  it 'creates a sidekick' do
+  it 'creates a sidekick to do the actual work' do
     expect(@subject.sidekick).to_not be nil
   end
 

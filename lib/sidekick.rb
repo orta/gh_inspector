@@ -4,9 +4,10 @@ module Inspector
   # then pass them back to the inspector who gets the public API credit.
 
   class Sidekick
-    attr_accessor :repo_owner, :repo_name
+    attr_accessor :repo_owner, :repo_name, :inspector
 
-    def initialize(repo_owner, repo_name)
+    def initialize(inspector, repo_owner, repo_name)
+      self.inspector = inspector
       self.repo_owner = repo_owner
       self.repo_name = repo_name
     end
@@ -15,9 +16,23 @@ module Inspector
     def search(query, delegate)
       validate_delegate(delegate)
 
+      delegate.inspector_started_query(query, inspector)
+
       url = url_for_request query
       results = get_api_results url
-      parse_results query, results
+      report = parse_results query, results
+
+      # TODO: downloading
+      #       error handling
+      #       progress callback
+
+      if report.issues.any?
+        delegate.inspector_successfully_recieved_report(report, inspector)
+      else
+        delegate.inspector_recieved_empty_report(report, inspector)
+      end
+
+      report
     end
 
     private

@@ -1,10 +1,12 @@
 require 'spec_helper'
 require 'sidekick'
 require 'evidence'
+require 'inspector'
 
 describe Inspector::Evidence do
   before do
-    @subject = Inspector::Sidekick.new 'orta', 'my_repo'
+    inspector = Inspector::Inspector.new('orta', 'my_repo')
+    @subject = inspector.sidekick
     @evidence = Inspector::Evidence.new
   end
 
@@ -13,7 +15,7 @@ describe Inspector::Evidence do
       url = 'https://api.github.com/search/issues?q=Testing%2Brepo%3Aorta%2Fmy_repo&sort=created&order=asc'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
-      @report = @subject.search 'Testing', @evidence
+      @report = @subject.search 'Testing', SilentEvidence.new
     end
 
     it 'handles a message about the start of a query' do

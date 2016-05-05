@@ -1,11 +1,12 @@
 require 'inspector/version'
-# Note that the README is generated from the class comments
+# Note that the README is generated from the class comments, so it's a bit
+# wider scope than your average class comment.
 
 module Inspector
   # To get started using The Issues Inspector, you will need to
-  # create an inspector. This class is main public API for querying issues.
+  # create an inspector instance. This class is main public API for querying issues.
   #
-  # #### Getting started
+  # #### Getting Started
   #
   # Create an instance of `Inspector::Inspector`, you can then ask it to search
   # based on your raised exception, or as a direct query yourself.
@@ -38,7 +39,7 @@ module Inspector
   class Inspector
     attr_accessor :repo_owner, :repo_name, :query, :sidekick
 
-    # Init function with a "orta/project" style string
+    # Class init function with a "orta/project" style string
     def self.from_slug(slug)
       details = slug.split '/'
       Inspector.new details.first, details.last
@@ -48,11 +49,11 @@ module Inspector
     def initialize(repo_owner, repo_name)
       self.repo_owner = repo_owner
       self.repo_name = repo_name
-      self.sidekick = Sidekick.new(repo_owner, repo_name)
+      self.sidekick = Sidekick.new(self, repo_owner, repo_name)
     end
 
-    # Does some magic to try and pull out a reasonable search query
-    # for an exception, then searchs with that
+    # Will do some magic to try and pull out a reasonable search query
+    # for an exception, then searches with that
     def search_exception(exception, delegate = nil)
       search_query(exception.message, delegate)
     end

@@ -1,11 +1,13 @@
 require 'spec_helper'
 require 'sidekick'
 require 'evidence'
+require 'inspector'
 
 describe Inspector::Sidekick do
   before do
-    @subject = Inspector::Sidekick.new 'orta', 'my_repo'
-    @evidence = Inspector::Evidence.new
+    inspector = Inspector::Inspector.new('orta', 'my_repo')
+    @subject = Inspector::Sidekick.new inspector, 'orta', 'my_repo'
+    @evidence = SilentEvidence.new
   end
 
   it 'keeps track of user / repo' do
