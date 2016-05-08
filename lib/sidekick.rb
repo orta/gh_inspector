@@ -20,13 +20,18 @@ module Inspector
       validate_delegate(delegate)
 
       delegate.inspector_started_query(query, inspector)
-
       url = url_for_request query
-      results = get_api_results url
+
+      begin
+        results = get_api_results url
+      rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
+        delegate.inspector_could_not_create_report(e, query, inspector)
+        return
+      end
+
       report = parse_results query, results
 
-      # TODO: error handling
-      #       progress callback
+      # TODO: progress callback
 
       if report.issues.any?
         delegate.inspector_successfully_recieved_report(report, inspector)
@@ -62,7 +67,6 @@ module Inspector
 
     # Converts a GitHub search JSON into a InspectionReport
     def parse_results(query, results)
-      puts query
       report = InspectionReport.new
       report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
       report.query = query

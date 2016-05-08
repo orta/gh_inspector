@@ -5,8 +5,8 @@ require 'inspector'
 
 describe Inspector::Sidekick do
   before do
-    inspector = Inspector::Inspector.new('orta', 'my_repo')
-    @subject = Inspector::Sidekick.new inspector, 'orta', 'my_repo'
+    @inspector = Inspector::Inspector.new('orta', 'my_repo')
+    @subject = Inspector::Sidekick.new @inspector, 'orta', 'my_repo'
     @evidence = SilentEvidence.new
   end
 
@@ -44,6 +44,43 @@ describe Inspector::Sidekick do
       expect(issue.state).to eq 'closed'
       expect(issue.body).to include 'The Ruby 1.8.x builds work fine'
       expect(issue.comments).to eq 8
+    end
+  end
+
+  describe 'delegate calls' do
+    before do
+      url = 'https://api.github.com/search/issues?q=Testing%252Brepo%253Aorta%252Fmy_repo&sort=created&order=asc'
+      @json = JSON.parse File.read('spec/inspector/stubbed_example.json')
+    end
+
+    it 'sends the starting message' do
+      allow(@subject).to receive(:get_api_results).and_return(@json)
+
+      expect(@evidence).to receive(:inspector_started_query).with("Testing", @inspector)
+      @subject.search 'Testing', @evidence
+    end
+
+    it 'passes errors to the delegate' do
+      error = Net::HTTPError.new('', '')
+      allow(@subject).to receive(:get_api_results).and_raise(error)
+
+      expect(@evidence).to receive(:inspector_could_not_create_report).with(error, "Testing", @inspector)
+      @subject.search 'Testing', @evidence
+    end
+
+    it 'sends a report if successful and there are issues' do
+      allow(@subject).to receive(:get_api_results).and_return(@json)
+
+      expect(@evidence).to receive(:inspector_successfully_recieved_report)
+      @subject.search 'Testing', @evidence
+    end
+
+    it 'sends a message about empty reports' do
+      @json['items'] = []
+      allow(@subject).to receive(:get_api_results).and_return(@json)
+
+      expect(@evidence).to receive(:inspector_recieved_empty_report)
+      @subject.search 'Testing', @evidence
     end
   end
 end

@@ -25,12 +25,6 @@ module Inspector
       puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
     end
 
-    # Called if it is taking longer than a second to pull down the results.
-    # This offers a chance to offer feedback to the user that it's not frozen.
-    def inspector_is_still_investigating(_query, _inspector)
-      print "."
-    end
-
     # Called once the inspector has recieved a report with more than one issue.
     def inspector_successfully_recieved_report(report, _inspector)
       report.issues[0..2].each { |issue| print_issue_full(issue) }

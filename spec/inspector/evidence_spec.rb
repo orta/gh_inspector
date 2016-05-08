@@ -23,11 +23,6 @@ describe Inspector::Evidence do
       @evidence.inspector_started_query("Problem", @subject)
     end
 
-    it 'handles a message query is still ongoing' do
-      allow(@evidence).to receive(:print).with(".")
-      @evidence.inspector_is_still_investigating("Problem", @subject)
-    end
-
     it 'handles full results' do
       message = ""
       allow(@evidence).to receive(:puts).and_wrap_original do |original_method, *args, &block|
