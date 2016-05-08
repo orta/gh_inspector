@@ -17,20 +17,17 @@ And then execute:
 #### The Inspector
 
 To get started using The Issues Inspector, you will need to
-create an inspector. This class is main public API for querying issues.
+create an inspector instance. This class is main public API for querying issues.
 
-#### Getting started
+#### Getting Started
 
 Create an instance of `Inspector::Inspector`, you can then ask it to search
 based on your raised exception, or as a direct query yourself.
 
 ``` ruby
-require 'gh-issues-inspector'
-inspector = Inspector::Inspector("orta", "eigen")
+require 'inspector'
+inspector = Inspector::Inspector.new "orta", "eigen"
 inspector.search_query "Someone set us up the bomb"
-
-# or
-inspector.search_exception(e)
 ```
 
 By default this would output:
@@ -48,11 +45,9 @@ Looking for related issues on CocoaPods/CocoaPods...
     https://github.com/CocoaPods/CocoaPods/issues/4391 [open] [3 comments]
 
 and 10 more at:
-https://github.com/CocoaPods/CocoaPods/search?q=undefined+method+%60to_ary%27&type=Issues&utf8=✓
+https://github.com/CocoaPods/CocoaPods/search?q=undefined+method+%60to_ary%27&type=Issues
 ```
-
-
-#### Presenting Your Report
+#### Presenting Your Report 
 
 The default user interface for the inspector, its public API should be
 considered the protocol for other classes wanting to provide a user interface.
@@ -62,14 +57,19 @@ Your custom objects will be verified at runtime that they conform to the protoco
 You can see the default implmentation at
 [lib/evidence.rb](/orta/gh-issues-inspector/tree/master/lib/evidence.rb).
 
-*Protocol for custom objects:*
+Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
 
- - `inspector_started_query(query, inspector)` - Called just as the investigation has begun.
- - `inspector_is_still_investigating(report, inspector)` - Called if it is taking longer than a second to pull down the results.
-This offers a chance to offer feedback to the user that it's not frozen.
- - `inspector_successfully_recieved_report(report, inspector)` - Called once the inspector has recieved a report with more than one issue.
- - `inspector_recieved_empty_report(inspector)` - Called once the report has been recieved, but when there are no issues found.
- - `inspector_could_not_create_report(error, inspector)` - Called when there have been networking issues in creating the report.
+``` ruby
+require 'gh-issues-inspector'
+inspector = Inspector::Inspector.new "orta", "eigen"
+inspector.search_query "Someone set us up the bomb", ArtsyUI.new
+```
+Protocol for custom objects:
+
+ - `inspector_started_query(_query, inspector)` - Called just as the investigation has begun.
+ - `inspector_successfully_recieved_report(report, _inspector)` - Called once the inspector has recieved a report with more than one issue.
+ - `inspector_recieved_empty_report(_report, inspector)` - Called once the report has been recieved, but when there are no issues found.
+ - `inspector_could_not_create_report(error, query, inspector)` - Called when there have been networking issues in creating the report.
 
 
 ## Development
