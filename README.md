@@ -80,6 +80,10 @@ The usage section of this README is generated from inline documentation inside t
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
+## Vision
+
+I don't expect this project to grow too much, there's space around improving the search query for an exception, mainly. Other than that the project is effectively done and just needs some production usage to iron out any kinks. This project is well tested, and has zero dependencies.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/orta/gh-issues-inspector.
