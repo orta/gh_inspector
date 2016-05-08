@@ -13,7 +13,7 @@ module Inspector
   # Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
   #
   # ``` ruby
-  # require 'gh-issues-inspector'
+  # require 'inspector'
   # inspector = Inspector::Inspector.new "orta", "eigen"
   # inspector.search_query "Someone set us up the bomb", ArtsyUI.new
   # ```
