@@ -12,7 +12,7 @@ describe Inspector::Evidence do
 
   describe 'reaction to delegate calls' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing%2Brepo%3Aorta%2Fmy_repo&sort=created&order=asc'
+      url = 'https://api.github.com/search/issues?q=Testing%252Brepo%253Aorta%252Fmy_repo&sort=created&order=asc'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
       @report = @subject.search 'Testing', SilentEvidence.new
@@ -38,12 +38,15 @@ describe Inspector::Evidence do
       expect(message).to eq <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
+   14 Nov 2012
 
  - pod search --full chokes on cocos2d.podspec:14
    https://github.com/CocoaPods/CocoaPods/issues/657 [closed] [1 comment]
+   20 Nov 2012
 
  - about pod
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
+   2 weeks ago
 
 and 30 more at:
 https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
@@ -64,25 +67,29 @@ eos
         expect(@message).to eq <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
+   14 Nov 2012
 
  - pod search --full chokes on cocos2d.podspec:14
    https://github.com/CocoaPods/CocoaPods/issues/657 [closed] [1 comment]
+   20 Nov 2012
 
  - about pod
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
+   2 weeks ago
 
 and 30 more at:
 https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
   eos
       end
 
-      it 'handles less results differenlt' do
+      it 'handles less results differenly' do
         @report.issues = [@report.issues.first]
         @evidence.inspector_successfully_recieved_report(@report, @subject)
 
         expect(@message).to eq <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
+   14 Nov 2012
 
 eos
       end

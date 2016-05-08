@@ -1,3 +1,6 @@
+require "net/http"
+require 'uri'
+
 module Inspector
   # The Sidekick is the one who does all the real work.
   # They take the query, get the GitHub API results, etc
@@ -22,8 +25,7 @@ module Inspector
       results = get_api_results url
       report = parse_results query, results
 
-      # TODO: downloading
-      #       error handling
+      # TODO: error handling
       #       progress callback
 
       if report.issues.any?
@@ -41,17 +43,26 @@ module Inspector
 
     # Generates a URL for the request
     def url_for_request(query)
-      root = "https://api.github.com/"
-      root + "search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
+      root = 'https://api.github.com/' \
+             "search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
+      URI.escape root
     end
 
     # Gets the search results
-    def get_api_results(_url)
-      JSON.parse File.read('spec/inspector/stubbed_example.json')
+    def get_api_results(url)
+      uri = URI.parse url
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+
+      request = Net::HTTP::Get.new uri.request_uri
+      response = http.request request
+
+      JSON.parse response.body
     end
 
     # Converts a GitHub search JSON into a InspectionReport
     def parse_results(query, results)
+      puts query
       report = InspectionReport.new
       report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
       report.query = query
@@ -74,7 +85,7 @@ module Inspector
   end
 
   class Issue
-    attr_accessor :title, :number, :html_url, :state, :body, :comments
+    attr_accessor :title, :number, :html_url, :state, :body, :comments, :updated_at
 
     # Hash -> public attributes
     def initialize(*h)

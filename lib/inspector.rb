@@ -1,4 +1,9 @@
 require 'inspector/version'
+require 'sidekick'
+require 'evidence'
+require 'evidence'
+require 'exception_hound'
+
 # Note that the README is generated from the class comments, so it's a bit
 # wider scope than your average class comment.
 
@@ -12,8 +17,8 @@ module Inspector
   # based on your raised exception, or as a direct query yourself.
   #
   # ``` ruby
-  # require 'gh-issues-inspector'
-  # inspector = Inspector::Inspector("orta", "eigen")
+  # require 'inspector'
+  # inspector = Inspector::Inspector.new "orta", "eigen"
   # inspector.search_query "Someone set us up the bomb"
   # ```
   #
@@ -55,7 +60,8 @@ module Inspector
     # Will do some magic to try and pull out a reasonable search query
     # for an exception, then searches with that
     def search_exception(exception, delegate = nil)
-      search_query(exception.message, delegate)
+      query = ExceptionHound.new(exception).query
+      search_query(query, delegate)
     end
 
     # Queries for an specific search string
