@@ -21,12 +21,12 @@ module Inspector
 
   class Evidence
     # Called just as the investigation has begun.
-    def inspector_started_query(_query, inspector)
+    def inspector_started_query(query, inspector)
       puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
     end
 
     # Called once the inspector has recieved a report with more than one issue.
-    def inspector_successfully_recieved_report(report, _inspector)
+    def inspector_successfully_recieved_report(report, inspector)
       report.issues[0..2].each { |issue| print_issue_full(issue) }
 
       if report.issues.count > 3
@@ -36,7 +36,7 @@ module Inspector
     end
 
     # Called once the report has been recieved, but when there are no issues found.
-    def inspector_recieved_empty_report(_report, inspector)
+    def inspector_recieved_empty_report(report, inspector)
       puts "Found no similar issues. To create a new issue, please visit:"
       puts "https://github.com/#{inspector.repo_owner}/#{inspector.repo_name}/issues/new"
     end

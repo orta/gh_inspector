@@ -118,3 +118,6 @@ Style/Documentation:
 
 Style/ZeroLengthPredicate:
   Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: false

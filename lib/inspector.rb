@@ -65,7 +65,7 @@ module Inspector
     end
 
     # Queries for an specific search string
-    def search_query(query, _delegate = nil)
+    def search_query(query, delegate = nil)
       delegate ||= Evidence.new
       sidekick.search(query, delegate)
     end
