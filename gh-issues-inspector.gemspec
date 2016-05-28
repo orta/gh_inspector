@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.email         = ['orta.therox@gmail.com']
 
   spec.summary       = 'Search through GitHub issues for your project for existing issues about a Ruby Error.'
-  spec.description   = 'Search through GitHub issues for your project for existing issues about a Ruby Error.'
   spec.homepage      = 'https://github.com/orta/gh-issues-inspector'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
