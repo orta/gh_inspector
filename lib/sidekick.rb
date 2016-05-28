@@ -52,9 +52,7 @@ module Inspector
 
     # Generates a URL for the request
     def url_for_request(query)
-      root = 'https://api.github.com/' \
-             "search/issues?q=#{query}%2Brepo%3A#{repo_owner}%2F#{repo_name}&sort=created&order=asc"
-      URI.escape root
+      "https://api.github.com/search/issues?q=#{URI.escape query}&repo=#{repo_owner}/#{repo_name}&sort=created&order=asc"
     end
 
     # Gets the search results
@@ -63,7 +61,7 @@ module Inspector
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
-      request = Net::HTTP::Get.new uri.request_uri
+      request = Net::HTTP::Get.new URI.escape(uri.request_uri)
       response = http.request request
 
       JSON.parse response.body
