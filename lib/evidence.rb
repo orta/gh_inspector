@@ -19,6 +19,8 @@ module Inspector
   # ```
   #
 
+  NUMBER_OF_ISSUES_INLINE = 3
+
   class Evidence
     # Called just as the investigation has begun.
     def inspector_started_query(query, inspector)
@@ -27,10 +29,10 @@ module Inspector
 
     # Called once the inspector has recieved a report with more than one issue.
     def inspector_successfully_recieved_report(report, inspector)
-      report.issues[0..2].each { |issue| print_issue_full(issue) }
+      report.issues[0..(NUMBER_OF_ISSUES_INLINE - 1)].each { |issue| print_issue_full(issue) }
 
-      if report.issues.count > 3
-        puts "and #{report.total_results - 3} more at:"
+      if report.issues.count > NUMBER_OF_ISSUES_INLINE
+        puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at:"
         puts report.url
       end
     end
