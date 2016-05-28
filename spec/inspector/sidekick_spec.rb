@@ -17,7 +17,7 @@ describe Inspector::Sidekick do
 
   describe 'when searching' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing%252Brepo%253Aorta%252Fmy_repo&sort=created&order=asc'
+      url = 'https://api.github.com/search/issues?q=Testing&repo=orta/my_repo&sort=created&order=asc'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
     end
@@ -49,7 +49,7 @@ describe Inspector::Sidekick do
 
   describe 'delegate calls' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing%252Brepo%253Aorta%252Fmy_repo&sort=created&order=asc'
+      url = 'https://api.github.com/search/issues?q=Testing&repo=orta/my_repo&sort=created&order=asc'
       @json = JSON.parse File.read('spec/inspector/stubbed_example.json')
     end
 
