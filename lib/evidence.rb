@@ -23,6 +23,7 @@ module Inspector
     # Called just as the investigation has begun.
     def inspector_started_query(query, inspector)
       puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
+      puts "Search query: #{query}" if inspector.verbose
     end
 
     # Called once the inspector has recieved a report with more than one issue.
