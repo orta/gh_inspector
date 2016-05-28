@@ -42,7 +42,7 @@ module Inspector
   #
 
   class Inspector
-    attr_accessor :repo_owner, :repo_name, :query, :sidekick
+    attr_accessor :repo_owner, :repo_name, :query, :sidekick, :verbose
 
     # Class init function with a "orta/project" style string
     def self.from_slug(slug)
@@ -51,9 +51,10 @@ module Inspector
     end
 
     # Init function with "orta", "project"
-    def initialize(repo_owner, repo_name)
+    def initialize(repo_owner, repo_name, verbose: false)
       self.repo_owner = repo_owner
       self.repo_name = repo_name
+      self.verbose = verbose
       self.sidekick = Sidekick.new(self, repo_owner, repo_name)
     end
 

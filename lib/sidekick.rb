@@ -42,6 +42,10 @@ module Inspector
       report
     end
 
+    def verbose
+      self.inspector.verbose
+    end
+
     private
 
     require 'json'
