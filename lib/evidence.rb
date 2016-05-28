@@ -61,7 +61,7 @@ module Inspector
   end
 end
 
-# Taken from http://stackoverflow.com/questions/195740/how-do-you-do-relative-time-in-rails
+# Taken from https://stackoverflow.com/questions/195740/how-do-you-do-relative-time-in-rails
 
 module PrettyDate
   def to_pretty
