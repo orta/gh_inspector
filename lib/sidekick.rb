@@ -52,12 +52,22 @@ module Inspector
 
     # Generates a URL for the request
     def url_for_request(query)
-      "https://api.github.com/search/issues?q=#{URI.escape query}&repo=#{repo_owner}/#{repo_name}&sort=created&order=asc"
+      sort_by = "updated"
+      order = "desc"
+
+      url = "https://api.github.com/search/issues?q="
+      url += URI.escape(query)
+      url += "+repo:#{repo_owner}/#{repo_name}"
+      url += "&sort=#{sort_by}"
+      url += "&order=#{order}"
+
+      url
     end
 
     # Gets the search results
     def get_api_results(url)
       uri = URI.parse url
+      puts "URL: #{url}" if self.verbose
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
