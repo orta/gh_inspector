@@ -34,8 +34,8 @@ module Inspector
       report.issues[0..(NUMBER_OF_ISSUES_INLINE - 1)].each { |issue| print_issue_full(issue) }
 
       if report.issues.count > NUMBER_OF_ISSUES_INLINE
-        puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at:"
-        puts report.url
+        puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at: #{report.url}"
+        puts ""
       end
     end
 
