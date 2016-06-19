@@ -24,8 +24,9 @@ module Inspector
   class Evidence
     # Called just as the investigation has begun.
     def inspector_started_query(query, inspector)
-      puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
+      puts "Looking for related GitHub issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
       puts "Search query: #{query}" if inspector.verbose
+      puts ""
     end
 
     # Called once the inspector has recieved a report with more than one issue.
@@ -33,8 +34,8 @@ module Inspector
       report.issues[0..(NUMBER_OF_ISSUES_INLINE - 1)].each { |issue| print_issue_full(issue) }
 
       if report.issues.count > NUMBER_OF_ISSUES_INLINE
-        puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at:"
-        puts report.url
+        puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at: #{report.url}"
+        puts ""
       end
     end
 

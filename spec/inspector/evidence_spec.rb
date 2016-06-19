@@ -15,14 +15,15 @@ describe Inspector::Evidence do
 
   describe 'reaction to delegate calls' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing&repo=orta/my_repo&sort=created&order=asc'
+      url = 'https://api.github.com/search/issues?q=Testing+repo:orta/my_repo'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
       @report = @subject.search 'Testing', SilentEvidence.new
     end
 
     it 'handles a message about the start of a query' do
-      allow(@evidence).to receive(:puts).with("Looking for related issues on orta/my_repo...")
+      allow(@evidence).to receive(:puts).with("")
+      allow(@evidence).to receive(:puts).with("Looking for related GitHub issues on orta/my_repo...")
       @evidence.inspector_started_query("Problem", @subject)
     end
 
@@ -46,8 +47,8 @@ describe Inspector::Evidence do
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
    2 weeks ago
 
-and 30 more at:
-https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+and 30 more at: https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+
 eos
     end
 
@@ -75,8 +76,8 @@ eos
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
    2 weeks ago
 
-and 30 more at:
-https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+and 30 more at: https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+
   eos
       end
 
