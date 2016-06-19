@@ -23,7 +23,7 @@ module Inspector
       url = url_for_request query
 
       begin
-        results = get_api_results url
+        results = get_api_results(url)
       rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
         delegate.inspector_could_not_create_report(e, query, inspector)
         return
@@ -63,15 +63,15 @@ module Inspector
 
     # Gets the search results
     def get_api_results(url)
-      uri = URI.parse url
+      uri = URI.parse(url)
       puts "URL: #{url}" if self.verbose
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
 
-      request = Net::HTTP::Get.new URI.escape(uri.request_uri)
-      response = http.request request
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
 
-      JSON.parse response.body
+      JSON.parse(response.body)
     end
 
     # Converts a GitHub search JSON into a InspectionReport
