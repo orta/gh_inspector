@@ -51,15 +51,12 @@ module Inspector
     require 'json'
 
     # Generates a URL for the request
-    def url_for_request(query)
-      sort_by = "updated"
-      order = "desc"
-
+    def url_for_request(query, sort_by: nil, order: nil)
       url = "https://api.github.com/search/issues?q="
       url += URI.escape(query)
       url += "+repo:#{repo_owner}/#{repo_name}"
-      url += "&sort=#{sort_by}"
-      url += "&order=#{order}"
+      url += "&sort=#{sort_by}" if sort_by
+      url += "&order=#{order}" if order
 
       url
     end
