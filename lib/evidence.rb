@@ -24,7 +24,7 @@ module Inspector
   class Evidence
     # Called just as the investigation has begun.
     def inspector_started_query(query, inspector)
-      puts "Looking for related issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
+      puts "Looking for related GitHub issues on #{inspector.repo_owner}/#{inspector.repo_name}..."
       puts "Search query: #{query}" if inspector.verbose
       puts ""
     end
