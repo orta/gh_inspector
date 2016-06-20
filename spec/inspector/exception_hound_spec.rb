@@ -1,9 +1,8 @@
 require 'spec_helper'
-require 'exception_hound'
 
-describe Inspector::ExceptionHound do
+describe GhInspector::ExceptionHound do
   before do
-    @hound = Inspector::ExceptionHound.new(Object)
+    @hound = GhInspector::ExceptionHound.new(Object)
   end
 
   it "removes instances memory addresses" do

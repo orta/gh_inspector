@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe Inspector do
+describe GhInspector do
   it 'has a version number' do
-    expect(Inspector::VERSION).not_to be nil
+    expect(GhInspector::VERSION).not_to be nil
   end
 end
 
-describe Inspector::Inspector do
+describe GhInspector::Inspector do
   before do
-    @subject = Inspector::Inspector.new 'orta', 'my_repo'
+    @subject = GhInspector::Inspector.new 'orta', 'my_repo'
   end
 
   it 'supports a slug class method' do
-    @subject = Inspector::Inspector.from_slug 'water/guy_heapo'
+    @subject = GhInspector::Inspector.from_slug 'water/guy_heapo'
     expect(@subject.repo_owner).to eq 'water'
     expect(@subject.repo_name).to eq 'guy_heapo'
   end

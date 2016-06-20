@@ -1,4 +1,4 @@
-module Inspector
+module GhInspector
   class ExceptionHound
     attr_accessor :message
 

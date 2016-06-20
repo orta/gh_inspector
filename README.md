@@ -21,12 +21,12 @@ create an inspector instance. This class is main public API for querying issues.
 
 #### Getting Started
 
-Create an instance of `Inspector::Inspector`, you can then ask it to search
+Create an instance of `GhInspector::Inspector`, you can then ask it to search
 based on your raised exception, or as a direct query yourself.
 
 ``` ruby
-require 'inspector'
-inspector = Inspector::Inspector.new "orta", "eigen"
+require 'gh_inspector'
+inspector = GhInspector::Inspector.new "orta", "eigen"
 inspector.search_query "Someone set us up the bomb"
 ```
 
@@ -60,8 +60,8 @@ You can see the default implmentation at
 Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
 
 ``` ruby
-require 'inspector'
-inspector = Inspector::Inspector.new "orta", "eigen"
+require 'gh_inspector'
+inspector = GhInspector::Inspector.new "orta", "eigen"
 inspector.search_query "Someone set us up the bomb", ArtsyUI.new
 ```
 Protocol for custom objects:

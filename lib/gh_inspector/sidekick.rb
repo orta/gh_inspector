@@ -1,7 +1,7 @@
 require "net/http"
 require 'uri'
 
-module Inspector
+module GhInspector
   # The Sidekick is the one who does all the real work.
   # They take the query, get the GitHub API results, etc
   # then pass them back to the inspector who gets the public API credit.
