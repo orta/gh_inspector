@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'gh-issues-inspector'
+gem 'gh_inspector'
 ```
 
 And then execute:
