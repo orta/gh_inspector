@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'inspector'
+require 'gh_inspector'
 
 # A quite version of Evidence, so tests don't `puts`
 class SilentEvidence

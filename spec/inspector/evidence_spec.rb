@@ -1,16 +1,13 @@
 require 'spec_helper'
-require 'sidekick'
-require 'evidence'
-require 'inspector'
 
-describe Inspector::Evidence do
+describe GhInspector::Evidence do
   before do
     time = Time.new(2016, 05, 13)
     allow(Time).to receive(:now).and_return time
 
-    inspector = Inspector::Inspector.new('orta', 'my_repo')
+    inspector = GhInspector::Inspector.new('orta', 'my_repo')
     @subject = inspector.sidekick
-    @evidence = Inspector::Evidence.new
+    @evidence = GhInspector::Evidence.new
   end
 
   describe 'reaction to delegate calls' do

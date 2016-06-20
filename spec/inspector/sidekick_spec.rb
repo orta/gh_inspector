@@ -1,12 +1,9 @@
 require 'spec_helper'
-require 'sidekick'
-require 'evidence'
-require 'inspector'
 
-describe Inspector::Sidekick do
+describe GhInspector::Sidekick do
   before do
-    @inspector = Inspector::Inspector.new('orta', 'my_repo')
-    @subject = Inspector::Sidekick.new @inspector, 'orta', 'my_repo'
+    @inspector = GhInspector::Inspector.new('orta', 'my_repo')
+    @subject = GhInspector::Sidekick.new @inspector, 'orta', 'my_repo'
     @evidence = SilentEvidence.new
   end
 

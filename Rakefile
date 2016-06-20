@@ -27,16 +27,16 @@ task :readme do
   finale = rest.split(end_split)[1]
 
   require 'yard'
-  files = ["lib/inspector.rb", "lib/sidekick.rb", "lib/evidence.rb"]
+  files = ["lib/gh_inspector/inspector.rb", "lib/gh_inspector/sidekick.rb", "lib/gh_inspector/evidence.rb"]
   docs = YARD::Registry.load(files, true)
 
   usage = "\n\n"
   usage << "#### The Inspector\n\n"
-  usage << docs.at("Inspector::Inspector").docstring
+  usage << docs.at("GhInspector::Inspector").docstring
   usage << "\n"
 
   usage << "#### Presenting Your Report \n\n"
-  evidence = docs.at("Inspector::Evidence")
+  evidence = docs.at("GhInspector::Evidence")
   usage << evidence.docstring
 
   usage << "\nProtocol for custom objects:\n\n"

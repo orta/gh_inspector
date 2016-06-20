@@ -1,7 +1,7 @@
-require 'inspector/version'
+require 'gh_inspector/version'
 require 'time'
 
-module Inspector
+module GhInspector
   # The default user interface for the inspector, its public API should be
   # considered the protocol for other classes wanting to provide a user interface.
   #
@@ -13,8 +13,8 @@ module Inspector
   # Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
   #
   # ``` ruby
-  # require 'inspector'
-  # inspector = Inspector::Inspector.new "orta", "eigen"
+  # require 'gh_inspector'
+  # inspector = GhInspector::Inspector.new "orta", "eigen"
   # inspector.search_query "Someone set us up the bomb", ArtsyUI.new
   # ```
   #

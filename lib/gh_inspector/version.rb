@@ -1,3 +1,3 @@
-module Inspector
+module GhInspector
   VERSION = '0.5.2'.freeze
 end

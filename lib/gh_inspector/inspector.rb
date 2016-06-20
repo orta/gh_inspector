@@ -1,24 +1,18 @@
-require 'inspector/version'
-require 'sidekick'
-require 'evidence'
-require 'evidence'
-require 'exception_hound'
-
 # Note that the README is generated from the class comments, so it's a bit
 # wider scope than your average class comment.
 
-module Inspector
+module GhInspector
   # To get started using The Issues Inspector, you will need to
   # create an inspector instance. This class is main public API for querying issues.
   #
   # #### Getting Started
   #
-  # Create an instance of `Inspector::Inspector`, you can then ask it to search
+  # Create an instance of `GhInspector::Inspector`, you can then ask it to search
   # based on your raised exception, or as a direct query yourself.
   #
   # ``` ruby
-  # require 'inspector'
-  # inspector = Inspector::Inspector.new "orta", "eigen"
+  # require 'gh_inspector'
+  # inspector = GhInspector::Inspector.new "orta", "eigen"
   # inspector.search_query "Someone set us up the bomb"
   # ```
   #
