@@ -14,7 +14,7 @@ describe GhInspector::Sidekick do
 
   describe 'when searching' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing+repo:orta/my_repo'
+      url = 'https://api.github.com/search/issues?q=Testing%20something+repo:orta/my_repo'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
     end
@@ -24,15 +24,15 @@ describe GhInspector::Sidekick do
     end
 
     it 'works right with fixtured data' do
-      results = @subject.search 'Testing', @evidence
+      results = @subject.search 'Testing something', @evidence
 
-      expect(results.url).to eq "https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓"
-      expect(results.query).to eq 'Testing'
+      expect(results.url).to eq "https://github.com/orta/my_repo/search?q=Testing%20something&type=Issues&utf8=✓"
+      expect(results.query).to eq 'Testing something'
       expect(results.total_results).to eq 33
     end
 
     it 'creates fully set up issues' do
-      results = @subject.search 'Testing', @evidence
+      results = @subject.search 'Testing something', @evidence
       issue = results.issues.first
 
       expect(issue.title).to eq 'Travis CI with Ruby 1.9.x fails for recent pull requests'

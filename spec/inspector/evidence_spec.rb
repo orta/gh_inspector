@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GhInspector::Evidence do
   before do
-    time = Time.new(2016, 05, 13)
+    time = Time.new(2016, 5, 13)
     allow(Time).to receive(:now).and_return time
 
     inspector = GhInspector::Inspector.new('orta', 'my_repo')
@@ -12,10 +12,10 @@ describe GhInspector::Evidence do
 
   describe 'reaction to delegate calls' do
     before do
-      url = 'https://api.github.com/search/issues?q=Testing+repo:orta/my_repo'
+      url = 'https://api.github.com/search/issues?q=Testing%20OK+repo:orta/my_repo'
       json = JSON.parse File.read('spec/inspector/stubbed_example.json')
       allow(@subject).to receive(:get_api_results).with(url).and_return(json)
-      @report = @subject.search 'Testing', SilentEvidence.new
+      @report = @subject.search 'Testing OK', SilentEvidence.new
     end
 
     it 'handles a message about the start of a query' do
@@ -44,7 +44,7 @@ describe GhInspector::Evidence do
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
    2 weeks ago
 
-and 30 more at: https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
 eos
     end
@@ -73,7 +73,7 @@ eos
    https://github.com/CocoaPods/CocoaPods/issues/4345 [closed] [21 comments]
    2 weeks ago
 
-and 30 more at: https://github.com/orta/my_repo/search?q=Testing&type=Issues&utf8=✓
+and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
   eos
       end
