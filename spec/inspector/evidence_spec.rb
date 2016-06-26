@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GhInspector::Evidence do
   before do
-    time = Time.new(2016, 05, 13)
+    time = Time.new(2016, 5, 13)
     allow(Time).to receive(:now).and_return time
 
     inspector = GhInspector::Inspector.new('orta', 'my_repo')
