@@ -77,7 +77,7 @@ module GhInspector
     # Converts a GitHub search JSON into a InspectionReport
     def parse_results(query, results)
       report = InspectionReport.new
-      report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{query}&type=Issues&utf8=✓"
+      report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{URI.escape(query)}&type=Issues&utf8=✓"
       report.query = query
       report.total_results = results['total_count']
       report.issues = results['items'].map { |item| Issue.new(item) }
