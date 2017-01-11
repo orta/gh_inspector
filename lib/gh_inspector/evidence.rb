@@ -37,12 +37,15 @@ module GhInspector
         puts "and #{report.total_results - NUMBER_OF_ISSUES_INLINE} more at: #{report.url}"
         puts ""
       end
+
+      print_open_link_hint
     end
 
     # Called once the report has been recieved, but when there are no issues found.
     def inspector_recieved_empty_report(report, inspector)
       puts "Found no similar issues. To create a new issue, please visit:"
       puts "https://github.com/#{inspector.repo_owner}/#{inspector.repo_name}/issues/new"
+      print_open_link_hint(true)
     end
 
     # Called when there have been networking issues in creating the report.
@@ -50,6 +53,7 @@ module GhInspector
       puts "Could not access the GitHub API, you may have better luck via the website."
       puts "https://github.com/#{inspector.repo_owner}/#{inspector.repo_name}/search?q=#{query}&type=Issues&utf8=✓"
       puts "Error: #{error.name}"
+      print_open_link_hint(true)
     end
 
     private
@@ -59,6 +63,11 @@ module GhInspector
       puts "   #{issue.html_url} [#{issue.state}] [#{issue.comments} comment#{issue.comments == 1 ? '' : 's'}]"
       puts "   #{Time.parse(issue.updated_at).to_pretty}"
       puts ""
+    end
+
+    def print_open_link_hint(newline = false)
+      puts "" if newline
+      puts "You can ⌘ + double-click on links to open them directly in your browser. 🔗" if /darwin/ =~ RUBY_PLATFORM
     end
   end
 end

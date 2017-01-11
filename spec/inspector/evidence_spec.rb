@@ -31,7 +31,7 @@ describe GhInspector::Evidence do
       end
 
       @evidence.inspector_successfully_recieved_report(@report, @subject)
-      expect(message).to eq <<-eos
+      expect(message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
@@ -47,6 +47,7 @@ describe GhInspector::Evidence do
 and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
 eos
+      expect(message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
     end
 
     describe '' do
@@ -60,7 +61,7 @@ eos
       it 'handles full results' do
         @evidence.inspector_successfully_recieved_report(@report, @subject)
 
-        expect(@message).to eq <<-eos
+        expect(@message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
@@ -76,26 +77,29 @@ eos
 and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
   eos
+        expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
       it 'handles less results differenly' do
         @report.issues = [@report.issues.first]
         @evidence.inspector_successfully_recieved_report(@report, @subject)
 
-        expect(@message).to eq <<-eos
+        expect(@message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
 
 eos
+        expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
       it 'handles empty results' do
         @evidence.inspector_recieved_empty_report(@report, @subject)
-        expect(@message).to eq <<-eos
+        expect(@message).to start_with <<-eos
 Found no similar issues. To create a new issue, please visit:
 https://github.com/orta/my_repo/issues/new
   eos
+        expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
       it 'handles network errors' do
@@ -103,11 +107,12 @@ https://github.com/orta/my_repo/issues/new
         allow(error).to receive(:name).and_return("Network Error")
 
         @evidence.inspector_could_not_create_report(error, "query", @subject)
-        expect(@message).to eq <<-eos
+        expect(@message).to start_with <<-eos
 Could not access the GitHub API, you may have better luck via the website.
 https://github.com/orta/my_repo/search?q=query&type=Issues&utf8=✓
 Error: Network Error
   eos
+        expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
     end
   end
