@@ -27,6 +27,9 @@ based on your raised exception, or as a direct query yourself.
 ``` ruby
 require 'gh_inspector'
 inspector = GhInspector::Inspector.new "orta", "eigen"
+# Either use an error:
+inspector.search_exception an_error, ArtsyUI.new
+# Or use a specific query:
 inspector.search_query "Someone set us up the bomb"
 ```
 
@@ -54,7 +57,7 @@ considered the protocol for other classes wanting to provide a user interface.
 
 Your custom objects will be verified at runtime that they conform to the protocol.
 
-You can see the default implmentation at
+You can see the default implementation at
 [lib/evidence.rb](/orta/gh-issues-inspector/tree/master/lib/evidence.rb).
 
 Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
@@ -62,13 +65,23 @@ Both `search_query` and `search_exception` take your custom delegate as a 2nd op
 ``` ruby
 require 'gh_inspector'
 inspector = GhInspector::Inspector.new "orta", "eigen"
-inspector.search_query "Someone set us up the bomb", ArtsyUI.new
+inspector.search_exception an_error, ArtsyUI.new
 ```
+
+or
+
+``` ruby
+require 'gh_inspector'
+inspector = GhInspector::Inspector.new "fastlane", "fastlane"
+inspector.search_query "Someone set us up the bomb", FastlaneUI.new
+```
+
+
 Protocol for custom objects:
 
  - `inspector_started_query(query, inspector)` - Called just as the investigation has begun.
- - `inspector_successfully_recieved_report(report, inspector)` - Called once the inspector has recieved a report with more than one issue.
- - `inspector_recieved_empty_report(report, inspector)` - Called once the report has been recieved, but when there are no issues found.
+ - `inspector_successfully_recieved_report(report, inspector)` - Called once the inspector has received a report with more than one issue.
+ - `inspector_recieved_empty_report(report, inspector)` - Called once the report has been received, but when there are no issues found.
  - `inspector_could_not_create_report(error, query, inspector)` - Called when there have been networking issues in creating the report.
 
 
