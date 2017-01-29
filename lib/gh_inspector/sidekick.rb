@@ -1,3 +1,5 @@
+autoload :Net, 'net/http'
+autoload :URI, 'uri'
 
 module GhInspector
   # The Sidekick is the one who does all the real work.
@@ -15,9 +17,6 @@ module GhInspector
 
     # Searches for a query, with a UI delegate
     def search(query, delegate)
-      require "net/http"
-      require 'uri'
-
       validate_delegate(delegate)
 
       delegate.inspector_started_query(query, inspector)
@@ -49,6 +48,8 @@ module GhInspector
 
     private
 
+    autoload :JSON, 'json'
+
     # Generates a URL for the request
     def url_for_request(query, sort_by: nil, order: nil)
       url = "https://api.github.com/search/issues?q="
@@ -62,8 +63,6 @@ module GhInspector
 
     # Gets the search results
     def get_api_results(url)
-      require 'json'
-
       uri = URI.parse(url)
       puts "URL: #{url}" if self.verbose
       http = Net::HTTP.new(uri.host, uri.port)
