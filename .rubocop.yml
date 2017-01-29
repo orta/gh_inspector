@@ -121,3 +121,7 @@ Style/ZeroLengthPredicate:
 
 Lint/UnusedMethodArgument:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
