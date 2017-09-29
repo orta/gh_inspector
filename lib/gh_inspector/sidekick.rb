@@ -1,5 +1,5 @@
-require "net/http"
-require 'uri'
+autoload :Net, 'net/http'
+autoload :URI, 'uri'
 
 module GhInspector
   # The Sidekick is the one who does all the real work.
@@ -48,7 +48,7 @@ module GhInspector
 
     private
 
-    require 'json'
+    autoload :JSON, 'json'
 
     # Generates a URL for the request
     def url_for_request(query, sort_by: nil, order: nil)

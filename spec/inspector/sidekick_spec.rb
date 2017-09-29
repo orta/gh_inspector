@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'json'
 
 describe GhInspector::Sidekick do
   before do
