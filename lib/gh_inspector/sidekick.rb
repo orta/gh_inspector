@@ -86,9 +86,13 @@ module GhInspector
 
     def validate_delegate(delegate)
       e = Evidence.new
+      deprecated_delegates = [
+        :inspector_successfully_recieved_report,
+        :inspector_recieved_empty_report
+      ]
       protocol = e.public_methods false
       protocol.each do |m|
-        raise "#{delegate} does not handle #{m}" unless delegate.methods.include? m
+        raise "#{delegate} does not handle #{m}" unless delegate.methods.include?(m) || deprecated_delegates.include?(m)
       end
     end
   end
