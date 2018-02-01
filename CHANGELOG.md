@@ -1,5 +1,8 @@
 ### Master
 
+### 1.1.0
+
+* Fixes typos in the delegate methods - revolter
 * Adds support for showing how to click on a link in terminal - 0xced
 
 ### 1.0.3
