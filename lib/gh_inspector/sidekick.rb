@@ -34,9 +34,9 @@ module GhInspector
       # TODO: progress callback
 
       if report.issues.any?
-        delegate.inspector_successfully_recieved_report(report, inspector)
+        delegate.inspector_successfully_received_report(report, inspector)
       else
-        delegate.inspector_recieved_empty_report(report, inspector)
+        delegate.inspector_received_empty_report(report, inspector)
       end
 
       report

@@ -29,8 +29,14 @@ module GhInspector
       puts ""
     end
 
-    # Called once the inspector has recieved a report with more than one issue.
+    # Deprecated: Please use `inspector_successfully_received_report` instead
     def inspector_successfully_recieved_report(report, inspector)
+      warn "[DEPRECATION] `inspector_successfully_recieved_report` is deprecated. Please use `inspector_successfully_received_report` instead."
+      inspector_successfully_received_report(report, inspector)
+    end
+
+    # Called once the inspector has received a report with more than one issue.
+    def inspector_successfully_received_report(report, inspector)
       report.issues[0..(NUMBER_OF_ISSUES_INLINE - 1)].each { |issue| print_issue_full(issue) }
 
       if report.issues.count > NUMBER_OF_ISSUES_INLINE
@@ -41,8 +47,14 @@ module GhInspector
       print_open_link_hint
     end
 
-    # Called once the report has been recieved, but when there are no issues found.
+    # Deprecated: Please use `inspector_received_empty_report` instead
     def inspector_recieved_empty_report(report, inspector)
+      warn "[DEPRECATION] `inspector_recieved_empty_report` is deprecated. Please use `inspector_received_empty_report` instead."
+      inspector_received_empty_report(report, inspector)
+    end
+
+    # Called once the report has been received, but when there are no issues found.
+    def inspector_received_empty_report(report, inspector)
       puts "Found no similar issues. To create a new issue, please visit:"
       puts "https://github.com/#{inspector.repo_owner}/#{inspector.repo_name}/issues/new"
       print_open_link_hint(true)

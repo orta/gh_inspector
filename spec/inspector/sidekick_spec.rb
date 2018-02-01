@@ -68,7 +68,7 @@ describe GhInspector::Sidekick do
     it 'sends a report if successful and there are issues' do
       allow(@subject).to receive(:get_api_results).and_return(@json)
 
-      expect(@evidence).to receive(:inspector_successfully_recieved_report)
+      expect(@evidence).to receive(:inspector_successfully_received_report)
       @subject.search 'Testing', @evidence
     end
 
@@ -76,7 +76,7 @@ describe GhInspector::Sidekick do
       @json['items'] = []
       allow(@subject).to receive(:get_api_results).and_return(@json)
 
-      expect(@evidence).to receive(:inspector_recieved_empty_report)
+      expect(@evidence).to receive(:inspector_received_empty_report)
       @subject.search 'Testing', @evidence
     end
   end
