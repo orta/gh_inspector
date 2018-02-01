@@ -30,7 +30,7 @@ describe GhInspector::Evidence do
         message << args.first + "\n"
       end
 
-      @evidence.inspector_successfully_recieved_report(@report, @subject)
+      @evidence.inspector_successfully_received_report(@report, @subject)
       expect(message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
@@ -59,7 +59,7 @@ eos
       end
 
       it 'handles full results' do
-        @evidence.inspector_successfully_recieved_report(@report, @subject)
+        @evidence.inspector_successfully_received_report(@report, @subject)
 
         expect(@message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
@@ -82,7 +82,7 @@ and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issue
 
       it 'handles less results differenly' do
         @report.issues = [@report.issues.first]
-        @evidence.inspector_successfully_recieved_report(@report, @subject)
+        @evidence.inspector_successfully_received_report(@report, @subject)
 
         expect(@message).to start_with <<-eos
  - Travis CI with Ruby 1.9.x fails for recent pull requests
@@ -94,7 +94,7 @@ eos
       end
 
       it 'handles empty results' do
-        @evidence.inspector_recieved_empty_report(@report, @subject)
+        @evidence.inspector_received_empty_report(@report, @subject)
         expect(@message).to start_with <<-eos
 Found no similar issues. To create a new issue, please visit:
 https://github.com/orta/my_repo/issues/new

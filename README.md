@@ -80,8 +80,8 @@ inspector.search_query "Someone set us up the bomb", FastlaneUI.new
 Protocol for custom objects:
 
  - `inspector_started_query(query, inspector)` - Called just as the investigation has begun.
- - `inspector_successfully_recieved_report(report, inspector)` - Called once the inspector has received a report with more than one issue.
- - `inspector_recieved_empty_report(report, inspector)` - Called once the report has been received, but when there are no issues found.
+ - `inspector_successfully_received_report(report, inspector)` - Called once the inspector has received a report with more than one issue.
+ - `inspector_received_empty_report(report, inspector)` - Called once the report has been received, but when there are no issues found.
  - `inspector_could_not_create_report(error, query, inspector)` - Called when there have been networking issues in creating the report.
 
 
