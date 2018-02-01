@@ -5,6 +5,7 @@ describe GhInspector::Sidekick do
     @inspector = GhInspector::Inspector.new('orta', 'my_repo')
     @subject = GhInspector::Sidekick.new @inspector, 'orta', 'my_repo'
     @evidence = SilentEvidence.new
+    @new_evidence = NewSilentEvidence.new
   end
 
   it 'keeps track of user / repo' do
@@ -68,7 +69,7 @@ describe GhInspector::Sidekick do
     it 'sends a report if successful and there are issues' do
       allow(@subject).to receive(:get_api_results).and_return(@json)
 
-      expect(@evidence).to receive(:inspector_successfully_received_report)
+      expect(@evidence).to receive(:inspector_successfully_recieved_report)
       @subject.search 'Testing', @evidence
     end
 
@@ -76,8 +77,23 @@ describe GhInspector::Sidekick do
       @json['items'] = []
       allow(@subject).to receive(:get_api_results).and_return(@json)
 
-      expect(@evidence).to receive(:inspector_received_empty_report)
+      expect(@evidence).to receive(:inspector_recieved_empty_report)
       @subject.search 'Testing', @evidence
+    end
+
+    it 'sends a report if successful and there are issues for delegate with new methods' do
+      allow(@subject).to receive(:get_api_results).and_return(@json)
+
+      expect(@new_evidence).to receive(:inspector_successfully_received_report)
+      @subject.search 'Testing', @new_evidence
+    end
+
+    it 'sends a message about empty reports for delegate with new methods' do
+      @json['items'] = []
+      allow(@subject).to receive(:get_api_results).and_return(@json)
+
+      expect(@new_evidence).to receive(:inspector_received_empty_report)
+      @subject.search 'Testing', @new_evidence
     end
   end
 end

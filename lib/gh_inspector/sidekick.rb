@@ -7,12 +7,13 @@ module GhInspector
   # then pass them back to the inspector who gets the public API credit.
 
   class Sidekick
-    attr_accessor :repo_owner, :repo_name, :inspector
+    attr_accessor :repo_owner, :repo_name, :inspector, :using_deprecated_method
 
     def initialize(inspector, repo_owner, repo_name)
       self.inspector = inspector
       self.repo_owner = repo_owner
       self.repo_name = repo_name
+      self.using_deprecated_method = false
     end
 
     # Searches for a query, with a UI delegate
@@ -34,9 +35,17 @@ module GhInspector
       # TODO: progress callback
 
       if report.issues.any?
-        delegate.inspector_successfully_received_report(report, inspector)
+        if self.using_deprecated_method
+          delegate.inspector_successfully_recieved_report(report, inspector)
+        else
+          delegate.inspector_successfully_received_report(report, inspector)
+        end
       else
-        delegate.inspector_received_empty_report(report, inspector)
+        if self.using_deprecated_method
+          delegate.inspector_recieved_empty_report(report, inspector)
+        else
+          delegate.inspector_received_empty_report(report, inspector)
+        end
       end
 
       report
@@ -85,14 +94,26 @@ module GhInspector
     end
 
     def validate_delegate(delegate)
-      e = Evidence.new
-      deprecated_delegates = [
+      deprecated_delegate_methods = [
         :inspector_successfully_recieved_report,
         :inspector_recieved_empty_report
       ]
+      new_delegate_methods = [
+        :inspector_successfully_received_report,
+        :inspector_received_empty_report
+      ]
+
+      deprecated_delegate_methods.each do |deprecated_delegate_method|
+        self.using_deprecated_method = true if delegate.methods.include?(deprecated_delegate_method)
+      end
+
+      e = Evidence.new
       protocol = e.public_methods false
       protocol.each do |m|
-        raise "#{delegate} does not handle #{m}" unless delegate.methods.include?(m) || deprecated_delegates.include?(m)
+        is_deprecated_method = deprecated_delegate_methods.include?(m)
+        is_new_delegate_method = new_delegate_methods.include?(m)
+
+        raise "#{delegate} does not handle #{m}" unless delegate.methods.include?(m) || is_deprecated_method || is_new_delegate_method
       end
     end
   end
