@@ -31,6 +31,10 @@ Lint/HandleExceptions:
 Lint/UnusedBlockArgument:
   Enabled: false
 
+# https://stackoverflow.com/a/13059657/865175
+Lint/UriEscapeUnescape:
+  Enabled: false
+
 # Needed for $verbose
 Style/GlobalVars:
   Enabled: false
@@ -106,6 +110,9 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Max: 18
+
+Metrics/BlockLength:
+  Enabled: false
 
 Style/DotPosition:
   Enabled: false

@@ -31,7 +31,8 @@ describe GhInspector::Evidence do
       end
 
       @evidence.inspector_successfully_received_report(@report, @subject)
-      expect(message).to start_with <<-eos
+      # rubocop:disable Layout/IndentHeredoc
+      expect(message).to start_with <<-ISSUE
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
@@ -46,7 +47,8 @@ describe GhInspector::Evidence do
 
 and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
-eos
+ISSUE
+      # rubocop:enable Layout/IndentHeredoc
       expect(message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
     end
 
@@ -61,7 +63,8 @@ eos
       it 'handles full results' do
         @evidence.inspector_successfully_received_report(@report, @subject)
 
-        expect(@message).to start_with <<-eos
+        # rubocop:disable Layout/IndentHeredoc
+        expect(@message).to start_with <<-ISSUE
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
@@ -76,7 +79,8 @@ eos
 
 and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issues&utf8=✓
 
-  eos
+  ISSUE
+        # rubocop:enable Layout/IndentHeredoc
         expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
@@ -84,21 +88,23 @@ and 30 more at: https://github.com/orta/my_repo/search?q=Testing%20OK&type=Issue
         @report.issues = [@report.issues.first]
         @evidence.inspector_successfully_received_report(@report, @subject)
 
-        expect(@message).to start_with <<-eos
+        expect(@message).to start_with <<-ISSUE
  - Travis CI with Ruby 1.9.x fails for recent pull requests
    https://github.com/CocoaPods/CocoaPods/issues/646 [closed] [8 comments]
    14 Nov 2012
 
-eos
+ISSUE
         expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
       it 'handles empty results' do
         @evidence.inspector_received_empty_report(@report, @subject)
-        expect(@message).to start_with <<-eos
+        # rubocop:disable Layout/IndentHeredoc
+        expect(@message).to start_with <<-ISSUE
 Found no similar issues. To create a new issue, please visit:
 https://github.com/orta/my_repo/issues/new
-  eos
+  ISSUE
+        # rubocop:enable Layout/IndentHeredoc
         expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
 
@@ -107,11 +113,13 @@ https://github.com/orta/my_repo/issues/new
         allow(error).to receive(:name).and_return("Network Error")
 
         @evidence.inspector_could_not_create_report(error, "query", @subject)
-        expect(@message).to start_with <<-eos
+        # rubocop:disable Layout/IndentHeredoc
+        expect(@message).to start_with <<-ISSUE
 Could not access the GitHub API, you may have better luck via the website.
 https://github.com/orta/my_repo/search?q=query&type=Issues&utf8=✓
 Error: Network Error
-  eos
+  ISSUE
+        # rubocop:enable Layout/IndentHeredoc
         expect(@message).to end_with "\nYou can ⌘ + double-click on links to open them directly in your browser. 🔗\n" if /darwin/ =~ RUBY_PLATFORM
       end
     end
