@@ -1,5 +1,9 @@
 ### Master
 
+### 1.1.1
+
+* Allow either all typoes, or all no typoes in the delegate call - revolter
+
 ### 1.1.0
 
 * Fixes typos in the delegate methods - revolter
