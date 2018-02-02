@@ -41,11 +41,13 @@ module GhInspector
           delegate.inspector_successfully_received_report(report, inspector)
         end
       else
+        # rubocop:disable Style/IfInsideElse
         if self.using_deprecated_method
           delegate.inspector_recieved_empty_report(report, inspector)
         else
           delegate.inspector_received_empty_report(report, inspector)
         end
+        # rubocop:enable Style/IfInsideElse
       end
 
       report
@@ -94,13 +96,13 @@ module GhInspector
     end
 
     def validate_delegate(delegate)
-      deprecated_delegate_methods = [
-        :inspector_successfully_recieved_report,
-        :inspector_recieved_empty_report
+      deprecated_delegate_methods = %i[
+        inspector_successfully_recieved_report
+        inspector_recieved_empty_report
       ]
-      new_delegate_methods = [
-        :inspector_successfully_received_report,
-        :inspector_received_empty_report
+      new_delegate_methods = %i[
+        inspector_successfully_received_report
+        inspector_received_empty_report
       ]
 
       deprecated_delegate_methods.each do |deprecated_delegate_method|
