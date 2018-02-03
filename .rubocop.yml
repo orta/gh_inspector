@@ -15,7 +15,7 @@ Lint/UselessAssignment:
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentHash:
+Layout/IndentHash:
   Enabled: false
 
 Style/RaiseArgs:
@@ -39,7 +39,7 @@ Lint/UriEscapeUnescape:
 Style/GlobalVars:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Enabled: false
 
 # $? Exit
@@ -82,7 +82,7 @@ Style/IfUnlessModifier:
   Enabled: false
 
 # That looks wrong
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
 # and and or is okay
@@ -114,7 +114,7 @@ Metrics/PerceivedComplexity:
 Metrics/BlockLength:
   Enabled: false
 
-Style/DotPosition:
+Layout/DotPosition:
   Enabled: false
 
 Style/GuardClause:
