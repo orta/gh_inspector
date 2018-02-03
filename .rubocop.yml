@@ -1,31 +1,22 @@
-Style/ClassVars:
+# That looks wrong
+Layout/AlignHash:
   Enabled: false
 
-Style/ClassCheck:
-  EnforcedStyle: kind_of?
+Layout/DotPosition:
+  Enabled: false
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/BracesAroundHashParameters:
-  Enabled: false
-
-Lint/UselessAssignment:
-  Exclude:
-    - 'spec/**/*'
-
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/IndentHash:
-  Enabled: false
-
-Style/RaiseArgs:
-  EnforcedStyle: exploded
-
-Style/DoubleNegation:
+Layout/IndentHash:
   Enabled: false
 
 Lint/HandleExceptions:
   Enabled: false
+
+# the let(:key) { ... } should be allowed in tests
+Lint/ParenthesesAsGroupedExpression:
+  Exclude:
+    - 'spec/**/*'
 
 # Cop supports --auto-correct.
 Lint/UnusedBlockArgument:
@@ -35,59 +26,23 @@ Lint/UnusedBlockArgument:
 Style/GlobalVars:
   Enabled: false
 
-Style/FileName:
+Lint/UnusedMethodArgument:
   Enabled: false
 
-# $? Exit
-Style/SpecialGlobalVars:
+# https://stackoverflow.com/a/13059657/865175
+Lint/UriEscapeUnescape:
   Enabled: false
 
-# the let(:key) { ... } should be allowed in tests
-Lint/ParenthesesAsGroupedExpression:
+Lint/UselessAssignment:
   Exclude:
     - 'spec/**/*'
-
-# options.rb might be large, we know that
-Metrics/MethodLength:
-  Max: 60
-  Exclude:
-    - 'lib/*/options.rb'
-
-# Both string notations are okay
-Style/StringLiterals:
-  Enabled: false
-
-# The %w might be confusing for new users
-Style/WordArray:
-  MinSize: 19
-
-# Not a good thing
-Style/RedundantSelf:
-  Enabled: false
-
-# raise and fail are both okay
-Style/SignalException:
-  Enabled: false
-
-# Better too much 'return' than one missing
-Style/RedundantReturn:
-  Enabled: false
-
-# Having if in the same line might not always be good
-Style/IfUnlessModifier:
-  Enabled: false
-
-# That looks wrong
-Style/AlignHash:
-  Enabled: false
-
-# and and or is okay
-Style/AndOr:
-  Enabled: false
 
 # Offense count: 20
 Metrics/AbcSize:
   Max: 60
+
+Metrics/BlockLength:
+  Enabled: false
 
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
@@ -100,6 +55,12 @@ Metrics/CyclomaticComplexity:
 Metrics/LineLength:
   Max: 370
 
+# options.rb might be large, we know that
+Metrics/MethodLength:
+  Max: 60
+  Exclude:
+    - 'lib/*/options.rb'
+
 # Configuration parameters: CountKeywordArgs.
 Metrics/ParameterLists:
   Max: 17
@@ -107,20 +68,67 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 18
 
-Metrics/BlockLength:
+Naming/FileName:
   Enabled: false
 
-Style/DotPosition:
+# and and or is okay
+Style/AndOr:
   Enabled: false
 
-Style/GuardClause:
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/ClassCheck:
+  EnforcedStyle: kind_of?
+
+Style/ClassVars:
   Enabled: false
 
 Style/Documentation:
   Enabled: false
 
-Style/ZeroLengthPredicate:
+Style/DoubleNegation:
   Enabled: false
 
-Lint/UnusedMethodArgument:
+# Needed for $verbose
+Style/GlobalVars:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+# Having if in the same line might not always be good
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/RaiseArgs:
+  EnforcedStyle: exploded
+
+# Better too much 'return' than one missing
+Style/RedundantReturn:
+  Enabled: false
+
+# Not a good thing
+Style/RedundantSelf:
+  Enabled: false
+
+# raise and fail are both okay
+Style/SignalException:
+  Enabled: false
+
+# $? Exit
+Style/SpecialGlobalVars:
+  Enabled: false
+
+# Both string notations are okay
+Style/StringLiterals:
+  Enabled: false
+
+# The %w might be confusing for new users
+Style/WordArray:
+  MinSize: 19
+
+Style/ZeroLengthPredicate:
   Enabled: false
