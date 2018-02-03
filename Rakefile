@@ -38,6 +38,7 @@ task :readme do
   usage << "#### Presenting Your Report \n\n"
   evidence = docs.at("GhInspector::Evidence")
   usage << evidence.docstring
+  usage << "\n"
 
   usage << "\nProtocol for custom objects:\n\n"
   evidence.children.each do |method|
@@ -45,7 +46,7 @@ task :readme do
     params = method.parameters.flatten.compact
     usage << " - `#{method.name}(#{params.join ', '})` - #{method.docstring}\n"
   end
-  usage << "\n\n"
+  usage << "\n"
 
   new_file = start + start_split + usage + end_split + finale
   File.open("README.md", 'w') { |f| f.write new_file }
