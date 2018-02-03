@@ -31,10 +31,6 @@ Lint/HandleExceptions:
 Lint/UnusedBlockArgument:
   Enabled: false
 
-# https://stackoverflow.com/a/13059657/865175
-Lint/UriEscapeUnescape:
-  Enabled: false
-
 # Needed for $verbose
 Style/GlobalVars:
   Enabled: false

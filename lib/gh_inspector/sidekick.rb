@@ -64,7 +64,7 @@ module GhInspector
     # Generates a URL for the request
     def url_for_request(query, sort_by: nil, order: nil)
       url = "https://api.github.com/search/issues?q="
-      url += URI.escape(query)
+      url += ERB::Util.url_encode(query)
       url += "+repo:#{repo_owner}/#{repo_name}"
       url += "&sort=#{sort_by}" if sort_by
       url += "&order=#{order}" if order
@@ -88,7 +88,7 @@ module GhInspector
     # Converts a GitHub search JSON into a InspectionReport
     def parse_results(query, results)
       report = InspectionReport.new
-      report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{URI.escape(query)}&type=Issues&utf8=✓"
+      report.url = "https://github.com/#{repo_owner}/#{repo_name}/search?q=#{ERB::Util.url_encode(query)}&type=Issues&utf8=✓"
       report.query = query
       report.total_results = results['total_count']
       report.issues = results['items'].map { |item| Issue.new(item) }
