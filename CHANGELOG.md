@@ -1,5 +1,9 @@
 ### Master
 
+### 1.1.2
+
+* URL escape the query for GH issues - revolter
+
 ### 1.1.1
 
 * Allow either all typoes, or all no typoes in the delegate call - revolter
