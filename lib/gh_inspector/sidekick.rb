@@ -1,3 +1,4 @@
+require 'erb'
 require "net/http"
 require 'uri'
 
