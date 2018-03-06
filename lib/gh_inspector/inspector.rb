@@ -13,6 +13,9 @@ module GhInspector
   # ``` ruby
   # require 'gh_inspector'
   # inspector = GhInspector::Inspector.new "orta", "eigen"
+  # # Either use an error:
+  # inspector.search_exception an_error, ArtsyUI.new
+  # # Or use a specific query:
   # inspector.search_query "Someone set us up the bomb"
   # ```
   #

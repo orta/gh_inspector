@@ -2,12 +2,14 @@ require 'gh_inspector/version'
 require 'time'
 
 module GhInspector
+  NUMBER_OF_ISSUES_INLINE = 3
+
   # The default user interface for the inspector, its public API should be
   # considered the protocol for other classes wanting to provide a user interface.
   #
   # Your custom objects will be verified at runtime that they conform to the protocol.
   #
-  # You can see the default implmentation at
+  # You can see the default implementation at
   # [lib/evidence.rb](/orta/gh-issues-inspector/tree/master/lib/evidence.rb).
   #
   # Both `search_query` and `search_exception` take your custom delegate as a 2nd optional parameter.
@@ -15,11 +17,17 @@ module GhInspector
   # ``` ruby
   # require 'gh_inspector'
   # inspector = GhInspector::Inspector.new "orta", "eigen"
-  # inspector.search_query "Someone set us up the bomb", ArtsyUI.new
+  # inspector.search_exception an_error, ArtsyUI.new
   # ```
   #
-
-  NUMBER_OF_ISSUES_INLINE = 3
+  # or
+  #
+  # ``` ruby
+  # require 'gh_inspector'
+  # inspector = GhInspector::Inspector.new "fastlane", "fastlane"
+  # inspector.search_query "Someone set us up the bomb", FastlaneUI.new
+  # ```
+  #
 
   class Evidence
     # Called just as the investigation has begun.
@@ -29,7 +37,7 @@ module GhInspector
       puts ""
     end
 
-    # Deprecated: Please use `inspector_successfully_received_report` instead
+    # Deprecated: Please use `inspector_successfully_received_report` instead.
     def inspector_successfully_recieved_report(report, inspector)
       warn "[DEPRECATION] `inspector_successfully_recieved_report` is deprecated. Please use `inspector_successfully_received_report` instead."
       inspector_successfully_received_report(report, inspector)
@@ -47,7 +55,7 @@ module GhInspector
       print_open_link_hint
     end
 
-    # Deprecated: Please use `inspector_received_empty_report` instead
+    # Deprecated: Please use `inspector_received_empty_report` instead.
     def inspector_recieved_empty_report(report, inspector)
       warn "[DEPRECATION] `inspector_recieved_empty_report` is deprecated. Please use `inspector_received_empty_report` instead."
       inspector_received_empty_report(report, inspector)
