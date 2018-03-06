@@ -1,5 +1,9 @@
 ### Master
 
+### 1.1.3
+
+* Require IRB early in the lib's lifecycle - segiddins
+
 ### 1.1.2
 
 * URL escape the query for GH issues - revolter
